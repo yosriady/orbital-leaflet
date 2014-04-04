@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Miniproject</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+    <style>
+    #map {
+        float: left;
+    }
+
+    #sidebar {
+        width: 400px;
+        float: left;
+    }
+
+    #sidebar table {
+        width: 400px;
+    }
+
+    #sidebar h2 {
+        text-align:center;
+    }
+
+    </style>
+</head>
+<body>
+
+    <!-- Put a div element with a certain id where you want your map to be -->
+    <div id="map" style="width: 800px; height: 600px"></div>
+
+    <div id="sidebar">
+        <h2>Your Notes</h2>
+        <table class="table table-striped">
+
+        </table>
+    </div>
+
+    <!-- Leaflet, Bootstrap, and jQuery JS files-->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <script>
+        var map = L.map('map').setView([51.505, -0.09], 13);
+        var tilesetUrl = 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png',
+            subDomains = ['otile1','otile2','otile3','otile4'],
+            attribution = 'Data, imagery and map information provided by <a href="http://open.mapquest.co.uk" target="_blank">MapQuest</a>, <a href="http://www.openstreetmap.org/" target="_blank">OpenStreetMap</a> and contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/" target="_blank">CC-BY-SA</a>';
+        var openMapQuest = new L.TileLayer(tilesetUrl, {maxZoom: 18, attribution: attribution, subdomains: subDomains});
+        openMapQuest.addTo(map);
+        var markers = new Array();
+
+        function createMarker(e) {
+            var note = prompt("Write your note!");
+
+            if(note){
+                var marker = L.marker(e.latlng, {draggable:true})
+                console.log(marker);
+                marker.addTo(map);
+                markers[marker._leaflet_id] = marker;
+
+                var popup = L.popup()
+                                    .setLatLng(e.latlng)
+                                    .setContent(note);
+                marker.bindPopup(popup);
+                updateSidebar();
+
+                marker.on('dragend', function(event){
+                            var marker = event.target;
+                            var position = marker.getLatLng();
+                            marker.update();
+                            console.log(marker._latlng);
+                            updateSidebar();
+                    });
+            }
+        }
+
+        function updateSidebar(){
+            $('#sidebar table').empty(); // clears the sidebar
+            markers.map(addMarkerToSidebar); //adds every marker in markers to the sidebar
+            // .map() Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+        }
+
+        function addMarkerToSidebar(marker){
+            $('#sidebar table').append("<tr><td>"+ marker.getLatLng() +  "</td><td>" + marker.getPopup().getContent() + "</td></tr>");
+        }
+
+        map.on('click', createMarker);
+
+
+    </script>
+
+</body>
+</html>
