@@ -46,13 +46,21 @@
         var popup = L.popup()
             .setContent("I am a standalone popup.");
 
-
-
+        // Example Map Click event
         function onMapClick(e) {
+            console.log(e);
             alert("You clicked the map at " + e.latlng);
         }
-
         map.on('click', onMapClick);
+
+        // Example Marker Click event
+        function onMarkerClick(e){
+            console.log(e);
+            alert("You clicked the marker!");
+        }
+
+        marker.on('click', onMarkerClick);
+
 
     </script>
 
