@@ -2,7 +2,7 @@ import sys
 import requests
 
 GEOCODE_API_URL = 'http://api.tiles.mapbox.com/v3/%s/geocode/%s.json'
-GEOCODE_API_KEY = 'examples.map-zr0njcqy'
+GEOCODE_API_KEY = 'examples.map-zr0njcqy' #Example API key, please sign up your own for production!
 
 def geocode(query):
     url = GEOCODE_API_URL % (GEOCODE_API_KEY, query)
