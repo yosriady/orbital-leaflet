@@ -28,7 +28,7 @@ This work is licensed under the Creative Commons Attribution 4.0 International L
 
 The MIT License (MIT)
 
-Copyright (c) 2014 [Wang GaoXiang](wgx731@comp.nus.edu.sg)
+Copyright (c) 2014 [Yos Riady](yosriady@nus.edu.sg)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
